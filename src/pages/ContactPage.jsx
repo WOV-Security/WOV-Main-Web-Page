@@ -1,7 +1,37 @@
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading.jsx';
+import emailjs from '@emailjs/browser';
 
 function ContactPage() {
+  const form = useRef();
+  const [status, setStatus] = useState(null);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          setStatus('success');
+          form.current.reset();
+          setTimeout(() => setStatus(null), 5000);
+        },
+        (error) => {
+          console.error('EmailJS error:', error);
+          setStatus('error');
+          setTimeout(() => setStatus(null), 5000);
+        }
+      );
+  };
+
   return (
     <div className="bg-slate-950 text-slate-100">
       <section className="relative overflow-hidden bg-slate-950 py-24">
@@ -58,11 +88,26 @@ function ContactPage() {
               <h2 className="mt-4 text-3xl font-semibold text-white">Begin your secure project.</h2>
               <p className="mt-4 text-slate-400">Share a few details and our team will craft a tailored assessment for your space.</p>
             </div>
-            <form className="mt-10 grid gap-6">
+            
+            {status === 'success' && (
+              <div className="mt-6 rounded-2xl bg-green-500/10 border border-green-500/20 p-4 text-green-400 text-sm font-medium">
+                Your inquiry has been sent successfully. We will get back to you shortly.
+              </div>
+            )}
+            
+            {status === 'error' && (
+              <div className="mt-6 rounded-2xl bg-red/10 border border-red/20 p-4 text-red-400 text-sm font-medium">
+                There was an error sending your message. Please try again or contact us directly via email.
+              </div>
+            )}
+
+            <form ref={form} onSubmit={sendEmail} className="mt-10 grid gap-6">
               <div className="space-y-3">
                 <label className="text-sm font-medium text-white/80">Name</label>
                 <input
                   type="text"
+                  name="user_name"
+                  required
                   placeholder="Your full name"
                   className="w-full rounded-[28px] border border-white/10 bg-white/5 px-5 py-4 text-sm text-white outline-none transition focus:border-red focus:ring-2 focus:ring-red/20"
                 />
@@ -71,6 +116,8 @@ function ContactPage() {
                 <label className="text-sm font-medium text-white/80">Email</label>
                 <input
                   type="email"
+                  name="user_email"
+                  required
                   placeholder="you@example.com"
                   className="w-full rounded-[28px] border border-white/10 bg-white/5 px-5 py-4 text-sm text-white outline-none transition focus:border-red focus:ring-2 focus:ring-red/20"
                 />
@@ -79,6 +126,7 @@ function ContactPage() {
                 <label className="text-sm font-medium text-white/80">Phone</label>
                 <input
                   type="tel"
+                  name="user_phone"
                   placeholder="+1 800 555 0199"
                   className="w-full rounded-[28px] border border-white/10 bg-white/5 px-5 py-4 text-sm text-white outline-none transition focus:border-red focus:ring-2 focus:ring-red/20"
                 />
@@ -86,13 +134,19 @@ function ContactPage() {
               <div className="space-y-3">
                 <label className="text-sm font-medium text-white/80">Message</label>
                 <textarea
+                  name="message"
+                  required
                   rows="5"
                   placeholder="Tell us about your project, space, or timeline."
                   className="w-full rounded-[28px] border border-white/10 bg-white/5 px-5 py-4 text-sm text-white outline-none transition focus:border-red focus:ring-2 focus:ring-red/20"
                 />
               </div>
-              <button type="submit" className="inline-flex items-center justify-center rounded-full bg-red px-8 py-4 text-sm font-semibold text-white transition hover:bg-red-600">
-                Send inquiry
+              <button 
+                type="submit" 
+                disabled={status === 'loading'}
+                className="inline-flex items-center justify-center rounded-full bg-red px-8 py-4 text-sm font-semibold text-white transition hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {status === 'loading' ? 'Sending...' : 'Send inquiry'}
               </button>
             </form>
           </motion.div>
