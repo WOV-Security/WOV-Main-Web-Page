@@ -6,7 +6,7 @@ import { fetchHomeProjects, fetchSettings } from '../utils/api.js';
 const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80';
 
 const heroItems = [
-  { label: '24/ Surveillance', accent: 'Reliability' },
+  { label: '24/7 Surveillance', accent: 'Reliability' },
   { label: 'Executive Monitoring', accent: 'Discretion' },
   { label: 'AI Risk Detection', accent: 'Precision' }
 ];
@@ -30,6 +30,15 @@ const stats = [
   { value: '15+', label: 'Years experience' },
   { value: '70+', label: 'Clients served' },
   { value: '120+', label: 'Projects completed' }
+];
+
+const brands = [
+  { name: 'Aether Concierge', logo: '/brands/aether-concierge.png' },
+  { name: 'Noir Estates', logo: '/brands/noir-estates.png' },
+  { name: 'Vantage Hospitality', logo: '/brands/vantage-hospitality.png' },
+  { name: 'Meridian Residences', logo: '/brands/meridian-residences.png' },
+  { name: 'Solstice Group', logo: '/brands/solstice-group.png' },
+  { name: 'Crestwood Holdings', logo: '/brands/crestwood-holdings.png' }
 ];
 
 const feedbacks = [
@@ -177,6 +186,39 @@ function HomePage() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <SectionHeading
+          eyebrow="Our brands"
+          title="Trusted by leading names across luxury hospitality and residences."
+          description="A snapshot of the premium brands who partner with WOV SECURITY for their protection needs."
+        />
+        <div className="relative mt-12 overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-slate-950 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-slate-950 to-transparent" />
+          <div className="flex w-max animate-marquee gap-6">
+            {[...brands, ...brands].map((brand, index) => (
+              <div
+                key={`${brand.name}-${index}`}
+                className="flex h-28 w-56 flex-shrink-0 items-center justify-center rounded-[24px] border border-slate-800 bg-slate-950/90 px-8 shadow-glow"
+              >
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="max-h-12 w-full object-contain opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                  onError={(event) => {
+                    event.currentTarget.style.display = 'none';
+                    event.currentTarget.nextElementSibling.style.display = 'block';
+                  }}
+                />
+                <span className="hidden text-center text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
+                  {brand.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
