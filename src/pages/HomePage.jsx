@@ -6,7 +6,7 @@ import { fetchHomeProjects, fetchSettings } from '../utils/api.js';
 const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80';
 
 const heroItems = [
-  { label: '24/7 Surveillance', accent: 'Reliability' },
+  { label: '24/ Surveillance', accent: 'Reliability' },
   { label: 'Executive Monitoring', accent: 'Discretion' },
   { label: 'AI Risk Detection', accent: 'Precision' }
 ];
