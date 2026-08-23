@@ -21,15 +21,6 @@ export default {
       },
       backgroundImage: {
         'hero-gradient': 'radial-gradient(circle at top left, rgba(209, 31, 38, 0.16), transparent 20%), radial-gradient(circle at bottom right, rgba(15, 15, 15, 0.14), transparent 30%)'
-      },
-      keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' }
-        }
-      },
-      animation: {
-        marquee: 'marquee 28s linear infinite'
       }
     }
   },

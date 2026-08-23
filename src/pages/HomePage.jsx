@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading.jsx';
+import BrandMarquee from '../components/BrandMarquee.jsx';
 import { fetchHomeProjects, fetchSettings } from '../utils/api.js';
 
 const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80';
@@ -195,30 +196,8 @@ function HomePage() {
           title="Trusted by leading names across luxury hospitality and residences."
           description="A snapshot of the premium brands who partner with WOV SECURITY for their protection needs."
         />
-        <div className="relative mt-12 overflow-hidden">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-slate-950 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-slate-950 to-transparent" />
-          <div className="flex w-max animate-marquee gap-6">
-            {[...brands, ...brands].map((brand, index) => (
-              <div
-                key={`${brand.name}-${index}`}
-                className="flex h-28 w-56 flex-shrink-0 items-center justify-center rounded-[24px] border border-slate-800 bg-slate-950/90 px-8 shadow-glow"
-              >
-                <img
-                  src={brand.logo}
-                  alt={brand.name}
-                  className="max-h-12 w-full object-contain opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
-                  onError={(event) => {
-                    event.currentTarget.style.display = 'none';
-                    event.currentTarget.nextElementSibling.style.display = 'block';
-                  }}
-                />
-                <span className="hidden text-center text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
-                  {brand.name}
-                </span>
-              </div>
-            ))}
-          </div>
+        <div className="mt-12">
+          <BrandMarquee brands={brands} />
         </div>
       </section>
 
