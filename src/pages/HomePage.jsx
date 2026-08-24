@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading.jsx';
 import BrandMarquee from '../components/BrandMarquee.jsx';
 import Marquee from '../components/Marquee.jsx';
-import { fetchHomeProjects, fetchSettings } from '../utils/api.js';
+import { fetchHomeProjects, fetchSettings, fetchFeedbacks } from '../utils/api.js';
 
 const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80';
 
@@ -44,20 +44,13 @@ const brands = [
   { name: 'TP LINK', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/tplink_d2qyef.png' }
 ];
 
-const feedbacks = [
-  {
-    client: 'Aether Concierge',
-    quote: '“The installation is flawless, and the monitoring feels effortless.”'
-  },
-  {
-    client: 'Noir Estates',
-    quote: '�WOV SECURITY understands luxury spaces and makes protection feel premium.�'
-  }
-];
-
 function HomePage() {
   const [heroImage, setHeroImage] = useState(DEFAULT_HERO_IMAGE);
   const [projects, setProjects] = useState([]);
+  const [apiFeedbacks, setApiFeedbacks] = useState([]);
+  const [feedbackLoading, setFeedbackLoading] = useState(true);
+  const [feedbackError, setFeedbackError] = useState(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     let mounted = true;
@@ -71,10 +64,32 @@ function HomePage() {
         if (mounted) setProjects(data);
       })
       .catch(() => {});
+    fetchFeedbacks()
+      .then((data) => {
+        if (mounted) {
+          setApiFeedbacks(data);
+          setFeedbackLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (mounted) {
+          setFeedbackError(err.message || 'Failed to load feedbacks');
+          setFeedbackLoading(false);
+        }
+      });
     return () => {
       mounted = false;
     };
   }, []);
+
+  // Auto-advance slider
+  useEffect(() => {
+    if (apiFeedbacks.length < 2) return;
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % apiFeedbacks.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [apiFeedbacks.length]);
 
   return (
     <div className="bg-slate-950 text-slate-100">
@@ -203,17 +218,94 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-6 pb-28">
         <div className="rounded-[40px] border border-slate-800 bg-slate-950/90 p-10 shadow-glow">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            {/* Left: heading */}
             <div>
               <p className="text-sm uppercase tracking-[0.35em] text-slate-400">Client feedback</p>
               <h2 className="mt-4 text-4xl font-semibold text-white">Trusted by premium clients.</h2>
-            </div>
-            <div className="space-y-4 text-slate-300">
-              {feedbacks.map((feedback) => (
-                <div key={feedback.client} className="rounded-[28px] border border-slate-800 bg-slate-950 p-6">
-                  <p className="font-semibold text-white">{feedback.client}</p>
-                  <p className="mt-3 text-slate-300">{feedback.quote}</p>
+              <p className="mt-4 text-slate-400 text-sm leading-relaxed">
+                Real experiences shared by the partners and clients who trust WOV SECURITY to protect what matters most.
+              </p>
+              {/* Dot navigation */}
+              {!feedbackLoading && !feedbackError && apiFeedbacks.length > 1 && (
+                <div className="mt-8 flex gap-2">
+                  {apiFeedbacks.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveSlide(i)}
+                      aria-label={`Go to feedback ${i + 1}`}
+                      className={`h-2 rounded-full transition-all duration-500 ${
+                        i === activeSlide
+                          ? 'w-8 bg-red'
+                          : 'w-2 bg-slate-700 hover:bg-slate-500'
+                      }`}
+                    />
+                  ))}
                 </div>
-              ))}
+              )}
+            </div>
+
+            {/* Right: slider */}
+            <div className="relative overflow-hidden">
+              {/* Loading skeleton */}
+              {feedbackLoading && (
+                <div className="space-y-4">
+                  {[0, 1].map((i) => (
+                    <div key={i} className="animate-pulse rounded-[28px] border border-slate-800 bg-slate-900 p-6">
+                      <div className="h-4 w-1/3 rounded bg-slate-700" />
+                      <div className="mt-4 h-3 w-full rounded bg-slate-800" />
+                      <div className="mt-2 h-3 w-4/5 rounded bg-slate-800" />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Error state */}
+              {feedbackError && !feedbackLoading && (
+                <div className="rounded-[28px] border border-red/30 bg-red/10 p-8 text-center">
+                  <p className="text-sm uppercase tracking-widest text-red">Unable to load</p>
+                  <p className="mt-2 text-slate-400 text-sm">{feedbackError}</p>
+                </div>
+              )}
+
+              {/* Slider cards */}
+              {!feedbackLoading && !feedbackError && apiFeedbacks.length > 0 && (
+                <div
+                  className="flex transition-transform duration-700 ease-in-out"
+                  style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                >
+                  {apiFeedbacks.map((feedback) => (
+                    <div
+                      key={feedback.id}
+                      className="min-w-full"
+                    >
+                      <motion.div
+                        layout
+                        className="rounded-[28px] border border-slate-800 bg-slate-950 p-8 shadow-glow"
+                      >
+                        {/* Quote icon */}
+                        <svg className="mb-4 h-8 w-8 text-red opacity-70" fill="currentColor" viewBox="0 0 32 32">
+                          <path d="M10 8C5.6 8 2 11.6 2 16c0 4.4 3.6 8 8 8 1 0 2-.2 2.8-.6C11.6 25.2 10 27.4 10 30h4c0-3.4 2.6-6 6-6v-4c-2.2 0-4.2.9-5.6 2.4C13.6 21.6 14 20.8 14 20c0-3.4-2-6.4-4-8V8zm16 0c-4.4 0-8 3.6-8 8 0 4.4 3.6 8 8 8 1 0 2-.2 2.8-.6C27.6 25.2 26 27.4 26 30h4c0-3.4 2.6-6 6-6v-4c-2.2 0-4.2.9-5.6 2.4C29.6 21.6 30 20.8 30 20c0-3.4-2-6.4-4-8V8z" />
+                        </svg>
+                        <p className="text-lg font-semibold text-white leading-snug">{feedback.title}</p>
+                        <p className="mt-4 text-slate-300 leading-relaxed">{feedback.description}</p>
+                        <div className="mt-6 flex items-center gap-3">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red/20 text-red text-xs font-bold uppercase">
+                            {feedback.title ? feedback.title.charAt(0) : 'F'}
+                          </div>
+                          <span className="text-xs uppercase tracking-[0.25em] text-slate-500">Verified client</span>
+                        </div>
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Empty state */}
+              {!feedbackLoading && !feedbackError && apiFeedbacks.length === 0 && (
+                <div className="rounded-[28px] border border-slate-800 bg-slate-950 p-8 text-center">
+                  <p className="text-slate-400 text-sm">No client feedback yet.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -36,3 +36,9 @@ export async function fetchSettings() {
   return response.json();
 }
 
+export async function fetchFeedbacks() {
+  const response = await fetch(`${API_BASE}/api/feedbacks`);
+  if (!response.ok) throw new Error('Failed to load feedbacks');
+  return response.json();
+}
+
