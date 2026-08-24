@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading.jsx';
 import BrandMarquee from '../components/BrandMarquee.jsx';
+import Marquee from '../components/Marquee.jsx';
 import { fetchHomeProjects, fetchSettings } from '../utils/api.js';
 
 const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80';
@@ -19,7 +20,7 @@ const experienceItems = [
   },
   {
     title: 'Premium Installation',
-    description: 'White-glove execution that preserves the aesthetic of high-end venues.'
+    description: 'White glove execution that preserves the aesthetic of high end venues.'
   },
   {
     title: 'Ongoing Elite Support',
@@ -28,18 +29,19 @@ const experienceItems = [
 ];
 
 const stats = [
-  { value: '15+', label: 'Years experience' },
-  { value: '70+', label: 'Clients served' },
-  { value: '120+', label: 'Projects completed' }
+  { value: '10+', label: 'Years experience' },
+  { value: '800+', label: 'Clients served' },
+  { value: '1000+', label: 'Projects completed' }
 ];
 
 const brands = [
-  { name: 'Aether Concierge', logo: '/brands/aether-concierge.png' },
-  { name: 'Noir Estates', logo: '/brands/noir-estates.png' },
-  { name: 'Vantage Hospitality', logo: '/brands/vantage-hospitality.png' },
-  { name: 'Meridian Residences', logo: '/brands/meridian-residences.png' },
-  { name: 'Solstice Group', logo: '/brands/solstice-group.png' },
-  { name: 'Crestwood Holdings', logo: '/brands/crestwood-holdings.png' }
+  { name: 'Hikvision', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/hikvision_lzpcg6.png' },
+  { name: 'EZVIZ', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/ezviz_gr07pz.png' },
+  { name: 'Tiandy', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/tiandy_xznkpo.png' },
+  { name: 'Karassn', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/karassn_pg4c3k.jpg' },
+  { name: 'Uniarch', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585612/uniarch_wc0uo1.jpg' },
+  { name: 'Dahua', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/dahua_k6jddm.png' },
+  { name: 'TP LINK', logo: 'https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787585611/tplink_d2qyef.png' }
 ];
 
 const feedbacks = [
@@ -116,13 +118,13 @@ function HomePage() {
                 <img
                   src={heroImage}
                   alt="Luxury CCTV installation"
-                  className="h-[320px] w-full object-cover sm:h-[440px] lg:h-[560px]"
+                  className="h-[420px] w-full object-cover sm:h-[440px] lg:h-[560px]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="rounded-[28px] border border-white/10 bg-black/70 p-6 backdrop-blur-xl">
-                    <p className="text-sm uppercase tracking-[0.35em] text-red">Signature environment</p>
-                    <h2 className="mt-4 text-3xl font-semibold text-white">A refined installation portfolio for premium spaces.</h2>
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                  <div className="rounded-[20px] border border-white/10 bg-black/70 p-4 backdrop-blur-xl sm:rounded-[28px] sm:p-6">
+                    <p className="text-xs uppercase tracking-[0.2em] text-red sm:text-sm sm:tracking-[0.35em]">Signature environment</p>
+                    <h2 className="mt-2 text-lg font-semibold text-white sm:mt-4 sm:text-3xl">A refined installation portfolio for premium spaces.</h2>
                   </div>
                 </div>
               </div>
@@ -132,11 +134,7 @@ function HomePage() {
       </section>
 
       <section id="experience" className="mx-auto max-w-7xl px-6 py-20">
-        <SectionHeading
-          eyebrow="Experience"
-          title="Expertise across luxury installs, executive monitoring, and elite support."
-          description="From private residences to hospitality and VIP transport, we deliver tailored security that feels seamless and unobtrusive."
-        />
+        <SectionHeading eyebrow="Experience" />
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {stats.map((stat) => (
             <div key={stat.label} className="rounded-[28px] border border-slate-800 bg-slate-950/90 p-6 text-center shadow-glow">
@@ -163,30 +161,31 @@ function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20">
-        <SectionHeading
-          eyebrow="Our best projects"
-          title="Showcasing the highest-impact security installations."
-          description="A curated selection of work that highlights design, performance, and premium execution."
-        />
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.7, delay: index * 0.1 }}
-              className="group overflow-hidden rounded-[32px] border border-slate-800 bg-slate-950/90 shadow-glow"
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img src={project.image} alt={project.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+        <SectionHeading eyebrow="Our best projects" />
+        <div className="mt-12">
+          <Marquee
+            items={projects}
+            itemKey={(project, index) => `${project.id}-${index}`}
+            renderItem={(project, index, key) => (
+              <div
+                key={key}
+                className="group w-72 flex-shrink-0 overflow-hidden rounded-[24px] border border-slate-800 bg-slate-950/90 shadow-glow sm:w-96 sm:rounded-[32px]"
+              >
+                <div className="relative h-40 overflow-hidden sm:h-56">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    draggable={false}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-5 sm:p-8">
+                  <p className="text-xs uppercase tracking-[0.2em] text-red sm:text-sm sm:tracking-[0.30em]">{project.title}</p>
+                  <p className="mt-3 text-sm text-slate-300 sm:mt-4 sm:text-base">{project.description}</p>
+                </div>
               </div>
-              <div className="p-8">
-                <p className="text-sm uppercase tracking-[0.30em] text-red">{project.title}</p>
-                <p className="mt-4 text-slate-300">{project.description}</p>
-              </div>
-            </motion.div>
-          ))}
+            )}
+          />
         </div>
       </section>
 
@@ -194,7 +193,7 @@ function HomePage() {
         <SectionHeading
           eyebrow="Our brands"
           title="Trusted by leading names across luxury hospitality and residences."
-          description="A snapshot of the premium brands who partner with WOV SECURITY for their protection needs."
+          description="Premium brands that trust WOV SECURITY."
         />
         <div className="mt-12">
           <BrandMarquee brands={brands} />

@@ -60,12 +60,12 @@ function ContactPage() {
             <div className="grid gap-6 sm:grid-cols-2">
               <div className="rounded-[28px] border border-red/10 bg-slate-900 p-6 shadow-sm">
                 <p className="text-sm uppercase tracking-[0.30em] text-red">Email</p>
-                <p className="mt-3 text-lg font-semibold text-white">contact@wovsecurity.com</p>
+                <p className="mt-3 text-lg font-semibold text-white">danushka@wovss.lk</p>
                 <p className="mt-2 text-sm text-slate-400">Priority response for executive clients.</p>
               </div>
               <div className="rounded-[28px] border border-red/10 bg-slate-900 p-6 shadow-sm">
                 <p className="text-sm uppercase tracking-[0.30em] text-red">Phone</p>
-                <p className="mt-3 text-lg font-semibold text-white">+1 800 555 0199</p>
+                <p className="mt-3 text-lg font-semibold text-white">+94 77 756 0473</p>
                 <p className="mt-2 text-sm text-slate-400">White-glove scheduling and support.</p>
               </div>
             </div>
