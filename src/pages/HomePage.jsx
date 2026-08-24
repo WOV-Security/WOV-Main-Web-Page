@@ -29,7 +29,7 @@ const experienceItems = [
 ];
 
 const stats = [
-  { value: '10+', label: 'Years experience' },
+  { value: '11+', label: 'Years experience' },
   { value: '800+', label: 'Clients served' },
   { value: '1000+', label: 'Projects completed' }
 ];
