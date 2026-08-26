@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading.jsx';
+import SolutionMediaGallery from '../components/SolutionMediaGallery.jsx';
 import { fetchSolutions } from '../utils/api.js';
 
 function SolutionsPage() {
@@ -88,16 +89,16 @@ function SolutionsPage() {
                 case 1:
                   return (
                     <div className="grid gap-3 sm:grid-cols-[1fr_0.95fr]">
-                      <div className="overflow-hidden rounded-[28px] bg-slate-950">
+                      <div className="aspect-[4/3] overflow-hidden rounded-[28px] bg-slate-950">
                         {heroPhoto ? (
                           <img src={heroPhoto} alt={project?.name || solution.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                         ) : (
-                          <div className="h-72 bg-slate-800" />
+                          <div className="h-full bg-slate-800" />
                         )}
                       </div>
-                      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                      <div className="grid gap-3 grid-cols-2">
                         {thumbPhotos.map((photo, thumbIndex) => (
-                          <div key={photo + thumbIndex} className="overflow-hidden rounded-[24px] bg-slate-950 h-32">
+                          <div key={photo + thumbIndex} className="aspect-square overflow-hidden rounded-[24px] bg-slate-950">
                             <img src={photo} alt={`${project?.name || solution.title} photo ${thumbIndex + 1}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                           </div>
                         ))}
@@ -107,18 +108,18 @@ function SolutionsPage() {
                 case 2:
                   return (
                     <div className="grid gap-3">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-2 gap-3">
                         {previewPhotos.slice(0, 4).map((photo, thumbIndex) => (
-                          <div key={photo + thumbIndex} className="overflow-hidden rounded-[24px] bg-slate-950 h-32">
+                          <div key={photo + thumbIndex} className="aspect-square overflow-hidden rounded-[24px] bg-slate-950">
                             <img src={photo} alt={`${project?.name || solution.title} photo ${thumbIndex + 1}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                           </div>
                         ))}
                       </div>
-                      <div className="overflow-hidden rounded-[28px] bg-slate-950">
+                      <div className="aspect-[4/3] overflow-hidden rounded-[28px] bg-slate-950">
                         {heroPhoto ? (
                           <img src={heroPhoto} alt={project?.name || solution.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                         ) : (
-                          <div className="h-72 bg-slate-800" />
+                          <div className="h-full bg-slate-800" />
                         )}
                       </div>
                     </div>
@@ -126,16 +127,16 @@ function SolutionsPage() {
                 case 3:
                   return (
                     <div className="grid gap-3">
-                      <div className="overflow-hidden rounded-[28px] bg-slate-950">
+                      <div className="aspect-[4/3] overflow-hidden rounded-[28px] bg-slate-950">
                         {heroPhoto ? (
                           <img src={heroPhoto} alt={project?.name || solution.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                         ) : (
-                          <div className="h-72 bg-slate-800" />
+                          <div className="h-full bg-slate-800" />
                         )}
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-3 gap-3">
                         {thumbPhotos.slice(0, 3).map((photo, thumbIndex) => (
-                          <div key={photo + thumbIndex} className="overflow-hidden rounded-[24px] bg-slate-950 h-28">
+                          <div key={photo + thumbIndex} className="aspect-square overflow-hidden rounded-[24px] bg-slate-950">
                             <img src={photo} alt={`${project?.name || solution.title} photo ${thumbIndex + 1}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                           </div>
                         ))}
@@ -145,16 +146,16 @@ function SolutionsPage() {
                 default:
                   return (
                     <div className="grid gap-3 sm:grid-cols-[1.6fr_0.9fr]">
-                      <div className="overflow-hidden rounded-[28px] bg-slate-950">
+                      <div className="aspect-[4/3] overflow-hidden rounded-[28px] bg-slate-950 sm:aspect-auto sm:h-80">
                         {heroPhoto ? (
-                          <img src={heroPhoto} alt={project?.name || solution.title} className="h-64 w-full object-cover sm:h-80 transition duration-500 group-hover:scale-105" />
+                          <img src={heroPhoto} alt={project?.name || solution.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                         ) : (
-                          <div className="h-64 sm:h-80 bg-slate-800" />
+                          <div className="h-full bg-slate-800" />
                         )}
                       </div>
-                      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                      <div className="grid gap-3 grid-cols-2">
                         {thumbPhotos.map((photo, thumbIndex) => (
-                          <div key={photo + thumbIndex} className="overflow-hidden rounded-[24px] bg-slate-950 h-32">
+                          <div key={photo + thumbIndex} className="aspect-square overflow-hidden rounded-[24px] bg-slate-950">
                             <img src={photo} alt={`${project?.name || solution.title} photo ${thumbIndex + 1}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                           </div>
                         ))}
@@ -174,7 +175,11 @@ function SolutionsPage() {
                 className="group overflow-hidden rounded-[32px] border border-slate-700 bg-slate-900/80 shadow-glow transition hover:border-red hover:bg-slate-900"
               >
                 <div className="p-8">
-                  {renderMedia()}
+                  <SolutionMediaGallery
+                    photos={previewPhotos}
+                    altBase={project?.name || solution.title}
+                    desktopMedia={renderMedia()}
+                  />
                   <div className="space-y-4 border-t border-slate-700/80 pt-6">
                     <p className="text-xs uppercase tracking-[0.35em] text-red">Featured project</p>
                     <h2 className="text-3xl font-semibold text-white">{solution.title}</h2>

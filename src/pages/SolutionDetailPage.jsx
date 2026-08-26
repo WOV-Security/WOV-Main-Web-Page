@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading.jsx';
+import SolutionMediaGallery from '../components/SolutionMediaGallery.jsx';
 import { fetchSolutionBySlug } from '../utils/api.js';
 
 function SolutionDetailPage() {
@@ -98,16 +99,24 @@ function SolutionDetailPage() {
                 <h2 className="text-3xl font-semibold text-white">{project.name}</h2>
                 <p className="max-w-2xl text-lg leading-8 text-slate-300">{project.summary}</p>
               </div>
-              <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
-                {project.photos.map((photo) => (
-                  <div key={photo} className="aspect-square w-full max-w-[240px] overflow-hidden rounded-[28px] shadow-xl">
-                    <img
-                      src={photo}
-                      alt={`${project.name} photo`}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ))}
+              <div className="mt-10">
+                <SolutionMediaGallery
+                  photos={project.photos}
+                  altBase={project.name}
+                  desktopMedia={
+                    <div className="grid gap-4 grid-cols-2 lg:grid-cols-3 justify-items-center">
+                      {project.photos.map((photo) => (
+                        <div key={photo} className="aspect-square w-full max-w-[240px] overflow-hidden rounded-[28px] shadow-xl">
+                          <img
+                            src={photo}
+                            alt={`${project.name} photo`}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  }
+                />
               </div>
             </motion.div>
           ))}
