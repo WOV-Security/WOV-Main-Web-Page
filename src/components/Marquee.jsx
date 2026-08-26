@@ -11,11 +11,14 @@ function Marquee({ items, renderItem, itemKey, gapClassName = 'gap-6' }) {
   const resumeTimeout = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  const loopItems = [...items, ...items];
+  const shouldLoop = items.length > 1;
+  const loopItems = shouldLoop ? [...items, ...items] : items;
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return undefined;
+
+    if (!shouldLoop) return undefined;
 
     let frameId;
     const step = () => {
@@ -32,7 +35,7 @@ function Marquee({ items, renderItem, itemKey, gapClassName = 'gap-6' }) {
     };
     frameId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frameId);
-  }, [isPaused, items.length]);
+  }, [isPaused, shouldLoop]);
 
   const pauseAutoScroll = () => {
     if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
@@ -93,26 +96,30 @@ function Marquee({ items, renderItem, itemKey, gapClassName = 'gap-6' }) {
         {loopItems.map((item, index) => renderItem(item, index, itemKey ? itemKey(item, index) : index))}
       </div>
 
-      <button
-        type="button"
-        onClick={() => slide(-1)}
-        aria-label="Slide left"
-        className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 text-white shadow-glow backdrop-blur transition hover:border-red hover:text-red sm:left-3"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        onClick={() => slide(1)}
-        aria-label="Slide right"
-        className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 text-white shadow-glow backdrop-blur transition hover:border-red hover:text-red sm:right-3"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      </button>
+      {items.length > 0 && (
+        <>
+          <button
+            type="button"
+            onClick={() => slide(-1)}
+            aria-label="Slide left"
+            className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 text-white shadow-glow backdrop-blur transition hover:border-red hover:text-red sm:left-3"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => slide(1)}
+            aria-label="Slide right"
+            className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 text-white shadow-glow backdrop-blur transition hover:border-red hover:text-red sm:right-3"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </>
+      )}
     </div>
   );
 }
