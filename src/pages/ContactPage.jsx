@@ -66,7 +66,7 @@ function ContactPage() {
               <div className="rounded-[28px] border border-red/10 bg-slate-900 p-6 shadow-sm">
                 <p className="text-sm uppercase tracking-[0.30em] text-red">Phone</p>
                 <p className="mt-3 text-lg font-semibold text-white">+94 77 756 0473</p>
-                <p className="mt-2 text-sm text-slate-400">White-glove scheduling and support.</p>
+                <p className="mt-2 text-sm text-slate-400">White glove scheduling and support.</p>
               </div>
             </div>
 

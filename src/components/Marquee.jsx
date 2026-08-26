@@ -71,6 +71,15 @@ function Marquee({ items, renderItem, itemKey, gapClassName = 'gap-6' }) {
     dragStartScroll.current = trackRef.current.scrollLeft;
   };
 
+  const slide = (direction) => {
+    const track = trackRef.current;
+    if (!track) return;
+    pauseAutoScroll();
+    const amount = track.clientWidth * 0.85;
+    track.scrollBy({ left: direction * amount, behavior: 'smooth' });
+    scheduleResume();
+  };
+
   return (
     <div className="relative overflow-hidden">
       <div
@@ -83,6 +92,27 @@ function Marquee({ items, renderItem, itemKey, gapClassName = 'gap-6' }) {
       >
         {loopItems.map((item, index) => renderItem(item, index, itemKey ? itemKey(item, index) : index))}
       </div>
+
+      <button
+        type="button"
+        onClick={() => slide(-1)}
+        aria-label="Slide left"
+        className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 text-white shadow-glow backdrop-blur transition hover:border-red hover:text-red sm:left-3"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        onClick={() => slide(1)}
+        aria-label="Slide right"
+        className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 text-white shadow-glow backdrop-blur transition hover:border-red hover:text-red sm:right-3"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
     </div>
   );
 }

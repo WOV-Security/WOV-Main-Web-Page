@@ -86,8 +86,8 @@ function Layout({ children }) {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
-          <Link to="/" onClick={handleRouteChange} className="flex items-center text-slate-100">
-            <div className="flex h-20 items-center justify-center rounded-2xl bg-white px-4 py-2 shadow-glow">
+          <Link to="/" onClick={handleRouteChange} className="-ml-2 flex items-center text-slate-100 sm:-ml-6">
+            <div className="flex h-20 items-center justify-center rounded-2xl bg-white px-6 py-2 shadow-glow">
               <img
                 src="https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787590741/wovss_ftfsgf.jpg"
                 alt="WOV Security"
@@ -182,7 +182,8 @@ function Layout({ children }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-slate-700 bg-slate-950 md:hidden"
+            className="max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain border-t border-slate-700 bg-slate-950 md:hidden"
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5">
               {navItems.slice(0, 2).map((item) => (
