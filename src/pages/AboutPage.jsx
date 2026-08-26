@@ -12,11 +12,11 @@ const DEFAULT_ABOUT = {
 const experiences = [
   {
     label: 'Luxury installations',
-    description: 'Delivered sophisticated security systems for high-end residences, hospitality venues, and executive spaces.'
+    description: 'Delivered sophisticated security systems for high end residences, hospitality venues, and executive spaces.'
   },
   {
     label: 'Executive support',
-    description: 'White-glove consulting, discreet implementation, and ongoing management for premium clients.'
+    description: 'White glove consulting, discreet implementation, and ongoing management for premium clients.'
   },
   {
     label: 'Discreet integration',

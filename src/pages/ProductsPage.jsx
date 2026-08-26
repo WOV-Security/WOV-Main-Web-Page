@@ -57,7 +57,7 @@ function ProductsPage() {
             {error}
           </div>
         ) : (
-          <div className="mt-12 grid gap-8 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 lg:gap-8">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -65,15 +65,15 @@ function ProductsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
-                className="rounded-[32px] border border-slate-700 bg-slate-900 p-0 shadow-glow"
+                className="rounded-2xl border border-slate-700 bg-slate-900 p-0 shadow-glow sm:rounded-[32px]"
               >
-                <div className="overflow-hidden rounded-t-[32px]">
-                  <img src={product.image} alt={product.title || product.name} className="h-56 w-full object-cover sm:h-64 lg:h-72" />
+                <div className="flex h-28 items-center justify-center overflow-hidden rounded-t-2xl bg-white p-3 sm:h-48 sm:rounded-t-[32px] sm:p-6 lg:h-56">
+                  <img src={product.image} alt={product.title || product.name} className="h-full w-full object-contain" />
                 </div>
-                <div className="p-8">
-                  <p className="text-sm uppercase tracking-[0.30em] text-red">{product.title}</p>
-                  <p className="mt-4 text-3xl font-semibold text-white">{product.price}</p>
-                  <p className="mt-4 text-slate-300">{product.description}</p>
+                <div className="p-3 sm:p-6 lg:p-8">
+                  <p className="text-[0.65rem] uppercase tracking-[0.2em] text-red sm:text-sm sm:tracking-[0.30em]">{product.title}</p>
+                  <p className="mt-2 text-lg font-semibold text-white sm:mt-4 sm:text-2xl lg:text-3xl">{product.price}</p>
+                  <p className="mt-2 text-xs text-slate-300 sm:mt-4 sm:text-base">{product.description}</p>
                 </div>
               </motion.div>
             ))}
