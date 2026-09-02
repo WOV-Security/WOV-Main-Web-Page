@@ -108,7 +108,7 @@ function HomePage() {
                 Executive CCTV and premium security for elite venues.
               </h1>
               <p className="max-w-3xl text-lg leading-8 text-slate-300">
-                WOV SECURITY delivers tailored surveillance experiences with discreet design, intelligent performance, and white-glove service.
+                WOV SECURITY delivers tailored surveillance experiences with discreet design, intelligent performance, and white glove service.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <a href="#experience" className="inline-flex items-center justify-center rounded-full bg-red px-8 py-4 text-sm font-semibold text-white transition hover:bg-red-600">
@@ -145,6 +145,17 @@ function HomePage() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <SectionHeading
+          eyebrow="Our brands"
+          title="Trusted by leading names across luxury hospitality and residences."
+          description="Premium brands that trust WOV SECURITY."
+        />
+        <div className="mt-12">
+          <BrandMarquee brands={brands} />
         </div>
       </section>
 
@@ -201,17 +212,6 @@ function HomePage() {
               </div>
             )}
           />
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <SectionHeading
-          eyebrow="Our brands"
-          title="Trusted by leading names across luxury hospitality and residences."
-          description="Premium brands that trust WOV SECURITY."
-        />
-        <div className="mt-12">
-          <BrandMarquee brands={brands} />
         </div>
       </section>
 

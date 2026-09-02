@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fetchSolutions } from '../utils/api.js';
+import wovLogo from '../assets/wov-logo.png';
 
 const HIDE_REVEAL_ZONE = 72;
 const HIDE_THRESHOLD = 120;
@@ -81,25 +82,19 @@ function Layout({ children }) {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans">
       <header
-        className={`sticky top-0 z-50 border-b border-slate-700/80 bg-slate-950/95 backdrop-blur-xl transition-transform duration-300 ease-out ${
+        className={`sticky top-0 z-50 border-b border-white/40 bg-white/60 backdrop-blur-xl shadow-[0_8px_32px_rgba(15,23,42,0.15)] transition-transform duration-300 ease-out ${
           headerHidden && !menuOpen ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
-          <Link to="/" onClick={handleRouteChange} className="-ml-2 flex items-center text-slate-100 sm:-ml-6">
-            <div className="flex h-20 items-center justify-center rounded-2xl bg-white px-6 py-2 shadow-glow">
-              <img
-                src="https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787590741/wovss_ftfsgf.jpg"
-                alt="WOV Security"
-                className="h-full w-auto object-contain"
-              />
-            </div>
+          <Link to="/" onClick={handleRouteChange} className="-ml-2 flex items-center sm:-ml-6">
+            <img src={wovLogo} alt="WOV Security" className="h-20 w-auto object-contain" />
           </Link>
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-full border border-slate-700 bg-slate-900 text-slate-100 transition hover:border-red hover:text-red focus:outline-none md:hidden"
+              className="inline-flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white text-slate-900 transition hover:border-red hover:text-red focus:outline-none md:hidden"
               aria-label="Toggle navigation"
             >
               <span className="block h-0.5 w-6 bg-current transition duration-300" />
@@ -114,7 +109,7 @@ function Layout({ children }) {
                     key={item.href}
                     to={item.href}
                     onClick={handleRouteChange}
-                    className={`text-sm font-medium transition duration-300 ${isActive ? 'text-white underline decoration-red underline-offset-8 decoration-2' : 'text-slate-400 hover:text-white'}`}
+                    className={`text-sm font-medium transition duration-300 ${isActive ? 'text-slate-900 underline decoration-red underline-offset-8 decoration-2' : 'text-slate-700 hover:text-slate-900'}`}
                   >
                     {item.label}
                   </Link>
@@ -129,16 +124,16 @@ function Layout({ children }) {
                 <button
                   type="button"
                   onClick={() => setSolutionsOpen((open) => !open)}
-                  className={`text-sm font-medium transition duration-300 ${pathname.startsWith('/solutions') ? 'text-white underline decoration-red underline-offset-8 decoration-2' : 'text-slate-400 hover:text-white'}`}
+                  className={`text-sm font-medium transition duration-300 ${pathname.startsWith('/solutions') ? 'text-slate-900 underline decoration-red underline-offset-8 decoration-2' : 'text-slate-700 hover:text-slate-900'}`}
                 >
                   Solutions
                 </button>
                 {solutionsOpen && (
-                  <div className="absolute left-0 top-full z-50 w-72 rounded-[28px] border border-slate-700 bg-slate-950/95 p-4 shadow-glow backdrop-blur-xl">
+                  <div className="absolute left-0 top-full z-50 w-72 rounded-[28px] border border-slate-200 bg-white/95 p-4 shadow-glow backdrop-blur-xl">
                     <Link
                       to="/solutions"
                       onClick={handleRouteChange}
-                      className="block rounded-3xl px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-900"
+                      className="block rounded-3xl px-4 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-100"
                     >
                       All solutions
                     </Link>
@@ -149,13 +144,13 @@ function Layout({ children }) {
                             key={solution.slug}
                             to={`/solutions/${solution.slug}`}
                             onClick={handleRouteChange}
-                            className="block rounded-3xl px-4 py-3 text-sm text-slate-300 transition hover:bg-slate-900 hover:text-white"
+                            className="block rounded-3xl px-4 py-3 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
                           >
                             {solution.title}
                           </Link>
                         ))
                       ) : (
-                        <div className="rounded-3xl px-4 py-3 text-sm text-slate-400">Loading solutions…</div>
+                        <div className="rounded-3xl px-4 py-3 text-sm text-slate-500">Loading solutions…</div>
                       )}
                     </div>
                   </div>
@@ -168,7 +163,7 @@ function Layout({ children }) {
                     key={item.href}
                     to={item.href}
                     onClick={handleRouteChange}
-                    className={`text-sm font-medium transition duration-300 ${isActive ? 'text-white underline decoration-red underline-offset-8 decoration-2' : 'text-slate-400 hover:text-white'}`}
+                    className={`text-sm font-medium transition duration-300 ${isActive ? 'text-slate-900 underline decoration-red underline-offset-8 decoration-2' : 'text-slate-700 hover:text-slate-900'}`}
                   >
                     {item.label}
                   </Link>
@@ -182,7 +177,7 @@ function Layout({ children }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain border-t border-slate-700 bg-slate-950 md:hidden"
+            className="max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain border-t border-slate-200 bg-white md:hidden"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5">
@@ -191,7 +186,7 @@ function Layout({ children }) {
                   key={item.href}
                   to={item.href}
                   onClick={handleRouteChange}
-                  className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${pathname === item.href ? 'bg-red/10 text-white' : 'text-slate-300 hover:bg-slate-900'}`}
+                  className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${pathname === item.href ? 'bg-red/10 text-slate-900' : 'text-slate-600 hover:bg-slate-100'}`}
                 >
                   {item.label}
                 </Link>
@@ -199,7 +194,7 @@ function Layout({ children }) {
               <Link
                 to="/solutions"
                 onClick={() => setMenuOpen(false)}
-                className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${pathname.startsWith('/solutions') ? 'bg-red/10 text-white' : 'text-slate-300 hover:bg-slate-900'}`}
+                className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${pathname.startsWith('/solutions') ? 'bg-red/10 text-slate-900' : 'text-slate-600 hover:bg-slate-100'}`}
               >
                 Solutions
               </Link>
@@ -208,14 +203,14 @@ function Layout({ children }) {
                   key={item.href}
                   to={item.href}
                   onClick={handleRouteChange}
-                  className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${pathname === item.href ? 'bg-red/10 text-white' : 'text-slate-300 hover:bg-slate-900'}`}
+                  className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${pathname === item.href ? 'bg-red/10 text-slate-900' : 'text-slate-600 hover:bg-slate-100'}`}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="rounded-2xl border border-slate-700 bg-slate-950 p-4">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm uppercase tracking-[0.35em] text-slate-400">Solutions</p>
+                  <p className="text-sm uppercase tracking-[0.35em] text-slate-500">Solutions</p>
                   <Link
                     to="/solutions"
                     onClick={() => setMenuOpen(false)}
@@ -227,7 +222,7 @@ function Layout({ children }) {
                 <Link
                   to="/solutions"
                   onClick={handleRouteChange}
-                  className="mt-3 block rounded-2xl px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-900"
+                  className="mt-3 block rounded-2xl px-4 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-100"
                 >
                   All solutions
                 </Link>
@@ -238,13 +233,13 @@ function Layout({ children }) {
                         key={solution.slug}
                         to={`/solutions/${solution.slug}`}
                         onClick={() => setMenuOpen(false)}
-                        className="block rounded-2xl px-4 py-3 text-sm text-slate-300 transition hover:bg-slate-900 hover:text-white"
+                        className="block rounded-2xl px-4 py-3 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
                       >
                         {solution.title}
                       </Link>
                     ))
                   ) : (
-                    <div className="rounded-2xl px-4 py-3 text-sm text-slate-400">Loading solutions…</div>
+                    <div className="rounded-2xl px-4 py-3 text-sm text-slate-500">Loading solutions…</div>
                   )}
                 </div>
               </div>
@@ -259,11 +254,7 @@ function Layout({ children }) {
         <div className="mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div className="space-y-5">
             <div className="inline-flex items-center rounded-3xl bg-white px-5 py-3 shadow-glow">
-              <img
-                src="https://res.cloudinary.com/dtscqhcop/image/upload/e_trim/v1787590741/wovss_ftfsgf.jpg"
-                alt="WOV Security"
-                className="h-20 w-auto object-contain"
-              />
+              <img src={wovLogo} alt="WOV Security" className="h-20 w-auto object-contain" />
             </div>
             <p className="max-w-lg text-slate-400">
               Premium surveillance design for luxury estates, hospitality, and executive environments. We deliver discreet, intelligent security that enhances every space.
@@ -284,6 +275,16 @@ function Layout({ children }) {
                   <path d="M16.6 5.82c-.7-.76-1.09-1.76-1.09-2.82h-3.13v13.44a2.6 2.6 0 1 1-1.83-2.48V10.9a5.75 5.75 0 1 0 4.96 5.7V9.28a7.44 7.44 0 0 0 4.36 1.4V7.55a4.4 4.4 0 0 1-3.27-1.73z" />
                 </svg>
               </a>
+              <a href="https://wa.me/94777560473" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900 transition hover:bg-slate-800 hover:text-white">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                </svg>
+              </a>
+              <a href="mailto:dhanushka@wovss.lk" aria-label="Email" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900 transition hover:bg-slate-800 hover:text-white">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -302,9 +303,9 @@ function Layout({ children }) {
           <div>
             <h3 className="text-sm uppercase tracking-[0.35em] text-slate-500">Contact</h3>
             <div className="mt-6 space-y-4 text-sm text-slate-400">
-              <p>dhanushka@wovss.lk</p>
-              <p>+94 77 756 0473</p>
-              <p>57B · Bandaranayake Mawatha · Katubadde </p>
+              <a href="mailto:dhanushka@wovss.lk" className="block transition hover:text-white">dhanushka@wovss.lk</a>
+              <a href="https://wa.me/94777560473" target="_blank" rel="noopener noreferrer" className="block transition hover:text-white">+94 77 756 0473</a>
+              <p>57B · Bandaranayake Mawatha · Katubeddha </p>
             </div>
             <div className="mt-8 rounded-3xl border border-slate-800 bg-slate-900 p-5 text-sm text-slate-400">
               <p className="text-slate-300">Secure consultation</p>
